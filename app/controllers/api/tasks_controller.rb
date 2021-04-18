@@ -1,6 +1,6 @@
 module Api
   class Api::TasksController < ApplicationController
-
+    protect_from_forgery
     def index
       @tasks = Task.order('created_at DESC')
     end
