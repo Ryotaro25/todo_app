@@ -4,13 +4,29 @@
       <input v-model="newTask" placeholder="Taskを追加する">
       <button v-on:click="createTask">追加</button>
     </div>
-    <ul>
-      <li v-for="(task, index) in tasks">
-          <input type="checkbox" v-model="task.is_done" v-on:click="update(task.id, index)">
-          <span v-bind:class="{done: task.is_done}">{{task.name}}</span>
+    <table border="1" style="border-collapse: collapse">
+      <thead>
+        <tr>
+          <th>Check</th>
+          <th>No.</th>
+          <th>担当</th>
+          <th>内容</th>
+          <th>優先度</th>
+          <th>期日</th>
+          <th>作成日</th>
+        </tr>
+      </thead>
+      <tbody v-for="(task, index) in tasks">
+          <th><input type="checkbox" v-model="task.is_done" v-on:click="update(task.id, index)"></th>
+          <th>{{task.id}}</th>
+          <th>{{task.user}}</th>
+          <th>{{task.name}}</th>
+          <th>{{task.priority}}</th>
+          <th>{{task.end_date}}</th>
+          <th>{{task.created_at}}</th>
           <button v-on:click="deleteTask(task.id, index)">削除</button>
-      </li>
-    </ul>
+      </tbody>
+    </table>
   </div>
   
 </template>

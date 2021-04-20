@@ -1,3 +1,3 @@
 <template>
-  <h1>ToDoリスト</h1>
+  <h1>業務管理</h1>
 </template>
