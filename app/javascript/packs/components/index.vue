@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <input v-model="newTask" placeholder="Taskを追加する">
+      <input v-model="task.name" placeholder="Taskを追加する">
       <button v-on:click="createTask">追加</button>
     </div>
     <table border="1" style="border-collapse: collapse">
@@ -18,12 +18,12 @@
       </thead>
       <tbody v-for="(task, index) in tasks">
           <th><input type="checkbox" v-model="task.is_done" v-on:click="update(task.id, index)"></th>
-          <th>{{task.id}}</th>
-          <th>{{task.user}}</th>
-          <th>{{task.name}}</th>
-          <th>{{task.priority}}</th>
-          <th>{{task.end_date}}</th>
-          <th>{{task.created_at}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.id}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.user}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.name}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.priority}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.end_date}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.created_at}}</th>
           <button v-on:click="deleteTask(task.id, index)">削除</button>
       </tbody>
     </table>
@@ -37,8 +37,13 @@ import axios from 'axios';
 export default {
   data: function() {
     return {
-      tasks: [],
-      newTask: ''
+      tasks:[],
+      task: {
+        name:'',
+        user:'',
+        priority:'',
+        end_date:''
+      }
     }
   },
   mounted: function() {
@@ -55,10 +60,11 @@ export default {
       });
     },
     createTask: function() {
-      if(this.newTask == '') return;
-      axios.post('/api/tasks', {task: {name: this.newTask}}).then((response) => {
+      if(this.task == '') return;
+      axios.post('/api/tasks', {
+        task: {name: this.task.name}}).then((response) => {
         this.tasks.unshift(response.data);
-        this.newTask = '';
+        this.task = '';
       }, (error) => {
         console.log(error, response);
       });

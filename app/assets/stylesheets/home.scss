@@ -3,6 +3,12 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 #app 
 tbody > th.done {
-  background-color: aqua;
- 
+  text-decoration: line-through;
+  background-color: #6d6d6d;
+}
+
+table {
+  text-align: center;
+  width: auto;
+  padding-top: 20px;
 }

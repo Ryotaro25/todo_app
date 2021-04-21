@@ -1,7 +1,7 @@
 module Api
   class Api::TasksController < ApplicationController
     protect_from_forgery
-    
+
     def index
       @tasks = Task.order('created_at DESC')
     end
@@ -24,7 +24,9 @@ module Api
       Task.find(params[:id]).toggle!(:is_done)
     end
 
-    private def task_params
+    private 
+    
+    def task_params
       params.require(:task).permit(:name, :is_done)
     end
   end
