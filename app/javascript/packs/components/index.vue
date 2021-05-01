@@ -1,7 +1,9 @@
 <template>
   <div>
     <div>
-      <input v-model="task.name" placeholder="Taskを追加する">
+      <input v-model="newUser" placeholder="担当">
+      <input v-model="newTask" placeholder="Taskを追加する">
+      <input v-model="newPriority" placeholder="優先度">
       <button v-on:click="createTask">追加</button>
     </div>
     <table border="1" style="border-collapse: collapse">
@@ -38,12 +40,9 @@ export default {
   data: function() {
     return {
       tasks:[],
-      task: {
-        name:'',
-        user:'',
-        priority:'',
-        end_date:''
-      }
+      newTask: '',
+      newUser:'',
+      newPriority: ''
     }
   },
   mounted: function() {
@@ -62,9 +61,11 @@ export default {
     createTask: function() {
       if(this.task == '') return;
       axios.post('/api/tasks', {
-        task: {name: this.task.name}}).then((response) => {
+        task: {name: this.newTask, user: this.newUser, priority: this.newPriority}}).then((response) => {
         this.tasks.unshift(response.data);
-        this.task = '';
+        this.newTask = '';
+        this.newUser = '';
+        this.newPriority = '';
       }, (error) => {
         console.log(error, response);
       });
