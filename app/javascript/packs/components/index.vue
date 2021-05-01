@@ -4,6 +4,7 @@
       <input v-model="newUser" placeholder="担当">
       <input v-model="newTask" placeholder="Taskを追加する">
       <input v-model="newPriority" placeholder="優先度">
+      <datepicker v-model="newEnddate" :format="DatePickerFormat" placeholder="期日" :language="ja"></datepicker>
       <button v-on:click="createTask">追加</button>
     </div>
     <table border="1" style="border-collapse: collapse">
@@ -26,7 +27,7 @@
           <th v-bind:class="{done: task.is_done}">{{task.priority}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.end_date}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.created_at}}</th>
-          <button v-on:click="deleteTask(task.id, index)">削除</button>
+          <button v-on:click="deleteTask(task.id, index)" class="delete">削除</button>
       </tbody>
     </table>
   </div>
@@ -35,6 +36,8 @@
 
 <script>
 import axios from 'axios';
+import Datepicker from 'vuejs-datepicker';
+import {ja} from 'vuejs-datepicker/dist/locale'
 
 export default {
   data: function() {
@@ -42,7 +45,10 @@ export default {
       tasks:[],
       newTask: '',
       newUser:'',
-      newPriority: ''
+      newPriority: '',
+      newEnddate: '',
+      DatePickerFormat: 'yyyy-MM-dd',
+      ja:ja
     }
   },
   mounted: function() {
@@ -61,11 +67,12 @@ export default {
     createTask: function() {
       if(this.task == '') return;
       axios.post('/api/tasks', {
-        task: {name: this.newTask, user: this.newUser, priority: this.newPriority}}).then((response) => {
+        task: {name: this.newTask, user: this.newUser, priority: this.newPriority, end_date: this.newEnddate}}).then((response) => {
         this.tasks.unshift(response.data);
         this.newTask = '';
         this.newUser = '';
         this.newPriority = '';
+        this.newEnddate ='';
       }, (error) => {
         console.log(error, response);
       });
@@ -84,6 +91,9 @@ export default {
         console.log(error);
       });
     }
+  },
+  components: {
+    Datepicker
   }
 }
 </script>
