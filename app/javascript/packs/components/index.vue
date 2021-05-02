@@ -3,7 +3,12 @@
     <div>
       <input v-model="newUser" placeholder="担当">
       <input v-model="newTask" placeholder="Taskを追加する">
-      <input v-model="newPriority" placeholder="優先度">
+      <select v-model="newPriority">
+        <option disabled value="">優先度</option>
+        <option>高</option>
+        <option>中</option>
+        <option>低</option>
+      </select>
       <datepicker v-model="newEnddate" :format="DatePickerFormat" placeholder="期日" :language="ja"></datepicker>
       <button v-on:click="createTask">追加</button>
     </div>
@@ -25,8 +30,8 @@
           <th v-bind:class="{done: task.is_done}">{{task.user}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.name}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.priority}}</th>
-          <th v-bind:class="{done: task.is_done}">{{task.end_date}}</th>
-          <th v-bind:class="{done: task.is_done}">{{task.created_at}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.end_date | moment}}</th>
+          <th v-bind:class="{done: task.is_done}">{{task.created_at | moment}}</th>
           <button v-on:click="deleteTask(task.id, index)" class="delete">削除</button>
       </tbody>
     </table>
@@ -38,6 +43,7 @@
 import axios from 'axios';
 import Datepicker from 'vuejs-datepicker';
 import {ja} from 'vuejs-datepicker/dist/locale'
+import moment from 'moment';
 
 export default {
   data: function() {
@@ -94,6 +100,11 @@ export default {
   },
   components: {
     Datepicker
-  }
+  },
+  filters: {
+        moment: function (date) {
+            return moment(date).format('MM月DD日');
+        }
+    }
 }
 </script>
