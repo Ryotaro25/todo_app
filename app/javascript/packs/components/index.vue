@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <div>
-      <input v-model="newUser" placeholder="担当">
-      <input v-model="newTask" placeholder="Taskを追加する">
-      <select v-model="newPriority">
+  <div class="mainbody">
+    <div >
+      <input v-model="newUser" placeholder="担当" class="childform form" >
+      <input v-model="newTask" placeholder="Taskを追加する" class="childform form" >
+      <select v-model="newPriority" class="childform form" >
         <option disabled value="">優先度</option>
         <option>高</option>
         <option>中</option>
         <option>低</option>
       </select>
-      <datepicker v-model="newEnddate" :format="DatePickerFormat" placeholder="期日" :language="ja"></datepicker>
-      <button v-on:click="createTask">追加</button>
+      <datepicker v-model="newEnddate" :format="DatePickerFormat" placeholder="期日" :language="ja" class="form"></datepicker>
+      <button v-on:click="createTask" class="form">追加</button>
     </div>
-    <table border="1" style="border-collapse: collapse">
+    <table border="1" style="border-collapse: collapse" align="center" width="70%" height="50%">
       <thead>
         <tr>
           <th>Check</th>
@@ -22,9 +22,10 @@
           <th>優先度</th>
           <th>期日</th>
           <th>作成日</th>
+          <th>削除ボタン</th>
         </tr>
       </thead>
-      <tbody v-for="(task, index) in tasks">
+      <tbody v-for="(task, index) in tasks" >
           <th><input type="checkbox" v-model="task.is_done" v-on:click="update(task.id, index)"></th>
           <th v-bind:class="{done: task.is_done}">{{task.id}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.user}}</th>
@@ -32,7 +33,7 @@
           <th v-bind:class="{done: task.is_done}">{{task.priority}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.end_date | moment}}</th>
           <th v-bind:class="{done: task.is_done}">{{task.created_at | moment}}</th>
-          <button v-on:click="deleteTask(task.id, index)" class="delete">削除</button>
+          <th><button v-on:click="deleteTask(task.id, index)" class="delete">削除</button></th>
       </tbody>
     </table>
   </div>

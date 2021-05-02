@@ -7,10 +7,22 @@ tbody > th.done {
   background-color: #6d6d6d;
 }
 
+
+.mainbody {
+  text-align: center;
+  
+  
+}
 table {
   text-align: center;
-  width: auto;
+
   padding-top: 20px;
+  margin-top: 30px;
+}
+
+.tablelist {
+  text-align: center;
+
 }
 
 .title, .mainbody {
@@ -19,4 +31,13 @@ table {
 }
 .delete {
   margin-left: 10px;
+  border: none;
+}
+
+.form {
+  display: inline-flex;
+  margin-top: 30px;
+  .childform {
+    margin-left: 15px;
+  }
 }
